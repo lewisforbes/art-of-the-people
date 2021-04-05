@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 django = "~=3.1.0"
 gunicorn = "==19.9.0"
+instabot = "==0.117.0"
+requests = "==2.25.1"
 
 [dev-packages]
 
