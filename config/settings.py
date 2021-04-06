@@ -119,3 +119,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+import os
+USERNAME = os.environ.get('USERNAME', True)
+PASSWORD = os.environ.get('PASSWORD', True)
