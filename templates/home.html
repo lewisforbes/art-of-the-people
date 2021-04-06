@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Lewis is cool</title>
+    <title>Lewwis is coool</title>
     {% load static %}
     <link href="{% static '/_assets/literallycanvas.css' %}" rel="stylesheet">
     <meta charset="UTF-8">
@@ -32,68 +32,64 @@
 
     <script type="text/javascript">
       var lc = LC.init(document.getElementById("lc"), {
-        imageURLPrefix: "https://raw.githubusercontent.com/literallycanvas/literallycanvas-demos/master/_assets/lc-images",
+        imageURLPrefix: "{% static '/_assets/lc-images' %}",
         toolbarPosition: 'bottom',
         defaultStrokeWidth: 3,
         strokeWidths: [1, 2, 3, 5, 30]
       });
     </script>
 
-    <!-- export -->
+    Title:
+    <input id="title-input", maxlength="25"><br>
+    Artist:
+    <input id="artist-input", maxlength="25">
+    <br>
     <button onclick="exportCanvasAsPNG()">Click me</button>
     <script>
       function exportCanvasAsPNG() {
-        var fileName = 'test'
         var canvasElement = document.getElementById('lc').getElementsByTagName('canvas')[1]
-
         var MIME_TYPE = "image/png";
-
         var imgURL = canvasElement.toDataURL(MIME_TYPE);
         post("/external/", imgURL)
-
-        // var dlLink = document.createElement('a');
-        // dlLink.download = fileName;
-        // dlLink.href = imgURL;
-        // dlLink.appendChild(document.createTextNode("Hi theree and greetings!"));
-        // dlLink.dataset.downloadurl = [MIME_TYPE, dlLink.download, dlLink.href].join(':');
-
-        // document.body.appendChild(dlLink);
-        // dlLink.click();
-        // document.body.removeChild(dlLink);
       }
 
-      function post(path, param, method='post') {
+      function post(path, img_data, method='post') {
         const form = document.createElement('form');
         form.method = method;
         form.action = path;
-        // form.textContent("{% csrf_token %}");
-        // form.value("hello")
-        const hiddenField = document.createElement('input');
-        // hiddenField.type = 'hidden';
-        hiddenField.name = "img_data";
-        hiddenField.value = param;
+
+        const img = document.createElement('input');
+        img.type = 'hidden';
+        img.name = "img_data";
+        img.value = img_data;
+
+        const title = document.createElement('input');
+        title.type = 'hidden';
+        title.name = 'title';
+        title.value = document.getElementById('title-input').value
+
+        const artist = document.createElement('input');
+        artist.type = 'hidden';
+        artist.name = 'artist';
+        artist.value = document.getElementById('artist-input').value
 
         const token = document.createElement('input');
+        token.type = 'hidden';
         token.name = "csrfmiddlewaretoken";
         token.value = "{{ csrf_token }}";
-        form.appendChild(hiddenField);
+
+        form.appendChild(img);
+        form.appendChild(title);
+        form.appendChild(artist);
         form.appendChild(token);
 
         document.body.appendChild(form);
         form.submit();
-        // document.body.removeChild(form);
+        // location.reload();
+        document.body.removeChild(form);
       }
 
     </script>
-  
-     <!-- <form action="/external/" method="post">
-       {% csrf_token %}
-       Input:
-       <input type="text" name="img_data">
-       {{data_external}}
-       {{data1}}
-       <input type="submit" value="Excecute">
-     </form> -->
     
   </body>
 </html>
