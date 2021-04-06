@@ -29,4 +29,4 @@ def post_img(b64_str, title, artist):
         pass
 
     print("Done")
-    return True
+    return True 
