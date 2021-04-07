@@ -19,8 +19,8 @@ def external(request):
     img_data = request.POST.get('img_data')
     artist = request.POST.get('artist')
     title = request.POST.get('title')
-    q.enqueue(functions.post_img, ttl=120, args=(img_data, artist, title))
-    # functions.post_img_temp(img_data, artist, title)
+    # q.enqueue(functions.post_img, ttl=120, args=(img_data, artist, title))
+    functions.post_img(img_data, title, artist)
     return render(request, 'home.html')
 
 q = Queue(connection = worker.conn)

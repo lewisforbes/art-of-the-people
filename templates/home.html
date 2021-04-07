@@ -1,95 +1,93 @@
-<!doctype html>
-<html>
-  <head>
-    <title>Lewwis is coool</title>
-    {% load static %}
-    <link href="{% static '/_assets/literallycanvas.css' %}" rel="stylesheet">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no" />
+<head>
+  <title>Lewwis is cool</title>
+  {% load static %}
+  <link href="{% static '/_assets/literallycanvas.css' %}" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no" />
 
-    <style type="text/css">
-      .fs-container {
-        width: 500px;
-        margin: auto;
+  <style type="text/css">
+    .fs-container {
+      width: 500px;
+      margin: auto;
+    }
+
+    .literally {
+      width: 100%;
+      height: 50%;
+      position: relative;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="fs-container">
+    <div id="lc"></div>
+  </div>
+
+  <!-- you really ought to include react-dom, but for react 0.14 you don't strictly have to. -->
+  <script src="{% static '/_js_libs/react-0.14.3.js' %}"></script>
+  <script src="{% static '/_js_libs/literallycanvas.js' %}"></script>
+
+  <script type="text/javascript">
+    var lc = LC.init(document.getElementById("lc"), {
+      imageURLPrefix: "{% static '/_assets/lc-images' %}",
+      toolbarPosition: 'bottom',
+      defaultStrokeWidth: 3,
+      strokeWidths: [1, 2, 3, 5, 30]
+    });
+  </script>
+
+<!-- <div id="response">
+  <pre></pre>
+</div> -->
+
+<form id="my-form">
+  <input type="text" id="title" name="title" placeholder="Title" required/>
+  <input type="text" id="artist" name="artist" placeholder="Artist" required/>
+  <input type="hidden" id="csrfmiddlewaretoken" name="csrfmiddlewaretoken" value="{{ csrf_token }}"/>
+  <input type="hidden" id="img_data" name="img_data" value=""/>
+
+  <button type="submit">Submit</button>
+</form>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+  (function($){
+      function processForm( e ){
+          var img_data = getImgData();
+          document.getElementById("img_data").setAttribute("value", img_data);
+          $.ajax({
+              url: '/external/',
+              dataType: 'text',
+              type: 'post',
+              contentType: 'application/x-www-form-urlencoded',
+              data: $(this).serialize(),
+              success: function( data, textStatus, jQxhr ){
+                  $('#response pre').html( data );
+              },
+              error: function( jqXhr, textStatus, errorThrown ){
+                  console.log( errorThrown );
+              }
+          });
+          clearForm();
+          e.preventDefault();
       }
 
-      .literally {
-        width: 100%;
-        height: 100%;
-        position: relative;
-      }
-    </style>
-  </head>
-
-  <body>
-    <div class="fs-container">
-      <div id="lc"></div>
-    </div>
-
-    <!-- you really ought to include react-dom, but for react 0.14 you don't strictly have to. -->
-    <script src="{% static '/_js_libs/react-0.14.3.js' %}"></script>
-    <script src="{% static '/_js_libs/literallycanvas.js' %}"></script>
-
-    <script type="text/javascript">
-      var lc = LC.init(document.getElementById("lc"), {
-        imageURLPrefix: "{% static '/_assets/lc-images' %}",
-        toolbarPosition: 'bottom',
-        defaultStrokeWidth: 3,
-        strokeWidths: [1, 2, 3, 5, 30]
-      });
-    </script>
-
-    Title:
-    <input id="title-input", maxlength="25"><br>
-    Artist:
-    <input id="artist-input", maxlength="25">
-    <br>
-    <button onclick="exportCanvasAsPNG()">Click me</button>
-    <script>
-      function exportCanvasAsPNG() {
+      function getImgData() {
         var canvasElement = document.getElementById('lc').getElementsByTagName('canvas')[1]
         var MIME_TYPE = "image/png";
         var imgURL = canvasElement.toDataURL(MIME_TYPE);
-        post("/external/", imgURL)
+        return imgURL;
       }
 
-      function post(path, img_data, method='post') {
-        const form = document.createElement('form');
-        form.method = method;
-        form.action = path;
-
-        const img = document.createElement('input');
-        img.type = 'hidden';
-        img.name = "img_data";
-        img.value = img_data;
-
-        const title = document.createElement('input');
-        title.type = 'hidden';
-        title.name = 'title';
-        title.value = document.getElementById('title-input').value
-
-        const artist = document.createElement('input');
-        artist.type = 'hidden';
-        artist.name = 'artist';
-        artist.value = document.getElementById('artist-input').value
-
-        const token = document.createElement('input');
-        token.type = 'hidden';
-        token.name = "csrfmiddlewaretoken";
-        token.value = "{{ csrf_token }}";
-
-        form.appendChild(img);
-        form.appendChild(title);
-        form.appendChild(artist);
-        form.appendChild(token);
-
-        document.body.appendChild(form);
-        form.submit();
-        // location.reload();
-        document.body.removeChild(form);
+      function clearForm() {
+        document.getElementById("img_data").setAttribute("value", '');
+        document.getElementById("artist").setAttribute("value", '');
+        document.getElementById("title").setAttribute("value", '');
       }
 
-    </script>
-    
-  </body>
+      $('#my-form').submit( processForm );
+  })(jQuery);
+</script>
+</body>
 </html>

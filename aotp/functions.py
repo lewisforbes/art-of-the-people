@@ -30,3 +30,7 @@ def post_img(b64_str, title, artist):
 
     print("Done")
     return True 
+
+def post_img_temp(x,y,z):
+    print("Received: ", x[:20], y, z)
+    return True
