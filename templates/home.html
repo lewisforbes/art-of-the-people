@@ -52,6 +52,11 @@
   <script src="{% static '/_js_libs/literallycanvas.js' %}"></script>
 
   <script type="text/javascript">
+    var imageSize = {width: 300, height: 300};
+    var imageBounds = {
+      x: 0, y: 0, width: imageSize.width, height: imageSize.height
+    };
+
     var lc = LC.init(document.getElementById("lc"), {
       imageURLPrefix: "{% static '/_assets/lc-images' %}",
       toolbarPosition: 'bottom',
@@ -60,6 +65,7 @@
       backgroundColor: "#fff",
       zoomMin: 1,
       zoomMax: 1,
+      imageSize: imageSize,
     });
   </script>
 
@@ -100,9 +106,10 @@
       }
 
       function getImgData() {
-        var canvasElement = document.getElementById('lc').getElementsByTagName('canvas')[1]
-        var MIME_TYPE = "image/png";
-        var imgURL = canvasElement.toDataURL(MIME_TYPE);
+        // var canvasElement = document.getElementById('lc').getElementsByTagName('canvas')[1];
+        // var MIME_TYPE = "image/png";
+        // var imgURL = canvasElement.toDataURL(MIME_TYPE);
+        imgURL = lc.getImage({rect: imageBounds}).toDataURL("image/png");
         return imgURL;
       }
 

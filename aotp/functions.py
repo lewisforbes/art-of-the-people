@@ -39,6 +39,6 @@ def post_img(b64_str, title, artist):
     
     my_caption = "\'{}\' by {}.\nDM to enquire.".format(title, artist)
     try:
-        bot.upload_photo(temp_jpg.name, caption=my_caption, force_resize=True)
+        bot.upload_photo(temp_jpg.name, caption=my_caption)
     except:
         pass
