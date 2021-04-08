@@ -24,11 +24,12 @@ def post_img(b64_str, title, artist):
     bot = Bot()
     try:
         bot.login(username=my_user, password=my_pass, is_threaded=True)
+        print("Logged in.")
         bot.upload_photo(temp_jpg.name,caption=my_caption)
+        print("Posted.")
     except:
-        pass
-
-    print("Done")
+        print("Failed to log in/post.")
+        
     return True 
 
 def post_img_temp(x,y,z):

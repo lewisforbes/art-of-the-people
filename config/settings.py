@@ -132,12 +132,12 @@ import os
 USERNAME = os.environ.get('USERNAME', True)
 PASSWORD = os.environ.get('PASSWORD', True)
 
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "asgi_redis.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [os.environ.get('REDISCLOUD_URL', 'redis://localhost:6379')],
-        },
-        "ROUTING": "chat.routing.channel_routing",
-    },
-}
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "asgi_redis.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": [os.environ.get('REDISCLOUD_URL', 'redis://localhost:6379')],
+#         },
+#         "ROUTING": "chat.routing.channel_routing",
+#     },
+# }

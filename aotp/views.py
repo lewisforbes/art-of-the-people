@@ -6,8 +6,8 @@ import sys
 from subprocess import run, PIPE
 from . import functions
 
-from rq import Queue
-from . import worker
+# from rq import Queue
+# from . import worker
 
 class HomePageView(TemplateView):
     template_name = "home.html"
@@ -23,4 +23,4 @@ def external(request):
     functions.post_img_temp(img_data, title, artist)
     return render(request, 'home.html')
 
-q = Queue(connection = worker.conn)
+# q = Queue(connection = worker.conn)
