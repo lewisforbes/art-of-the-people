@@ -40,7 +40,6 @@
 <!-- <div id="response">
   <pre></pre>
 </div> -->
-
 <form id="my-form">
   <input type="text" id="title" name="title" placeholder="Title" required/>
   <input type="text" id="artist" name="artist" placeholder="Artist" required/>
@@ -56,6 +55,7 @@
       function processForm( e ){
           var img_data = getImgData();
           document.getElementById("img_data").setAttribute("value", img_data);
+          document.getElementById("my-form").style.display = "none";
           $.ajax({
               url: '/external/',
               dataType: 'text',

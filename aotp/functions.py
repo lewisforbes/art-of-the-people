@@ -4,6 +4,14 @@ from PIL import Image
 from tempfile import NamedTemporaryFile
 from django.conf import settings
 
+from instabot import Bot
+def newBot(my_user=settings.USERNAME, my_pass=settings.PASSWORD):
+    bot = Bot()
+    bot.login(username=my_user, password=my_pass, is_threaded=True)
+    return bot
+
+bot = newBot()  
+
 def post_img(b64_str, title, artist):
     b64_bytes = bytes(b64_str[22:], 'utf-8')
 
@@ -16,19 +24,13 @@ def post_img(b64_str, title, artist):
     bg.paste(im, (0, 0), im)
     temp_jpg = NamedTemporaryFile(delete=False)
     bg.convert('RGB').save(temp_jpg.name, "JPEG")
-
-    my_user = getattr(settings, "USERNAME", None)
-    my_pass = getattr(settings, "PASSWORD", None)
-
-    my_caption = "\"{}\" by {}.\nDM to enquire.".format(title, artist)
-    bot = Bot()
+    
+    my_caption = "\'{}\' by {}.\nDM to enquire.".format(title, artist)
     try:
-        bot.login(username=my_user, password=my_pass, is_threaded=True)
-        print("Logged in.")
         bot.upload_photo(temp_jpg.name,caption=my_caption)
         print("Posted.")
     except:
-        print("Failed to log in/post.")
+        print("Failed to post.")
         
     return True 
 
