@@ -1,2 +1,1 @@
-web: gunicorn config.wsgi --timeout 30 --log-file -
-worker: python worker.py
+web: gunicorn config.wsgi --timeout 60 --log-file -
