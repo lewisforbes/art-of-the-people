@@ -61,8 +61,8 @@
 
   <br>
 <form id="my-form" autocomplete="off" style="font-size: 20px;">
-  <input type="text" id="title" name="title" placeholder="Title"/>
-  <input type="text" id="artist" name="artist" placeholder="Artist"/>
+  <input type="text" id="title" name="title" placeholder="Title" required/>
+  <input type="text" id="artist" name="artist" placeholder="Artist" required/>
   <input type="hidden" id="csrfmiddlewaretoken" name="csrfmiddlewaretoken" value="{{ csrf_token }}"/>
   <input type="hidden" id="img_data" name="img_data" value=""/>
 
@@ -125,7 +125,7 @@
   <h2>Here's your submission:</h2>
   <img id="final-drawing" style="background-color: white; border: 4px solid black;">
   <h2>Be patient. It'll be uploaded soon.</h2>
-  <a href="https://www.instagram.com/artoftheppl/">@artoftheppl</a>
+  <a href="https://www.instagram.com/artoftheppl/" style="font-size: medium;">@artoftheppl</a>
 </div>
 
 <footer>
