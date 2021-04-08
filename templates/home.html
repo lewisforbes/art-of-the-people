@@ -1,5 +1,5 @@
 <head>
-  <title>Lewwis is cool</title>
+  <title>Art of the People</title>
   {% load static %}
   <link href="{% static '/_assets/literallycanvas.css' %}" rel="stylesheet">
   <meta charset="UTF-8">
@@ -16,12 +16,31 @@
       height: 50%;
       position: relative;
     }
+
+    h1,h2,p,a {
+      font-family: Arial;
+    }
+
+    a {
+      color: darkslategrey;
+      text-decoration: none;
+    }
+
+    a:hover {
+        color:#264040;
+        }
+
+    body {
+      background-color: gainsboro;
+    }
   </style>
 </head>
 
 <body>
+  <center>
+  <h1>Art of the People</h1>
   <div class="fs-container">
-    <div id="lc"></div>
+    <div id="lc" style="border: 3px solid black;"></div>
   </div>
 
   <!-- you really ought to include react-dom, but for react 0.14 you don't strictly have to. -->
@@ -33,20 +52,22 @@
       imageURLPrefix: "{% static '/_assets/lc-images' %}",
       toolbarPosition: 'bottom',
       defaultStrokeWidth: 3,
-      strokeWidths: [1, 2, 3, 5, 30]
+      strokeWidths: [1, 2, 3, 5, 30],
+      backgroundColor: "#fff",
+      zoomMin: 1,
+      zoomMax: 1,
     });
   </script>
 
-<!-- <div id="response">
-  <pre></pre>
-</div> -->
-<form id="my-form">
-  <input type="text" id="title" name="title" placeholder="Title" required/>
-  <input type="text" id="artist" name="artist" placeholder="Artist" required/>
+  <br>
+<form id="my-form" autocomplete="off" style="font-size: 20px;">
+  <input type="text" id="title" name="title" placeholder="Title"/>
+  <input type="text" id="artist" name="artist" placeholder="Artist"/>
   <input type="hidden" id="csrfmiddlewaretoken" name="csrfmiddlewaretoken" value="{{ csrf_token }}"/>
   <input type="hidden" id="img_data" name="img_data" value=""/>
 
-  <button type="submit">Submit</button>
+  <br><br>
+  <button type="submit" style="font-size: 20px;">Post</button>
 </form>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -55,7 +76,8 @@
       function processForm( e ){
           var img_data = getImgData();
           document.getElementById("img_data").setAttribute("value", img_data);
-          document.getElementById("my-form").style.display = "none";
+
+          submittedView(img_data)
           $.ajax({
               url: '/external/',
               dataType: 'text',
@@ -69,7 +91,7 @@
                   console.log( errorThrown );
               }
           });
-          clearForm();
+          //clearForm();
           e.preventDefault();
       }
 
@@ -78,6 +100,15 @@
         var MIME_TYPE = "image/png";
         var imgURL = canvasElement.toDataURL(MIME_TYPE);
         return imgURL;
+      }
+
+      function submittedView(img_data) {
+        document.getElementsByClassName("fs-container")[0].style.display = "none";
+        document.getElementById("my-form").style.display = "none";
+
+        final_drawing = document.getElementById('final-drawing');
+        final_drawing.src = 'data:image/jpeg;base64,' + img_data.substr(22, img_data.length);
+        document.getElementById("final").style.display = "inline-block";
       }
 
       function clearForm() {
@@ -89,5 +120,20 @@
       $('#my-form').submit( processForm );
   })(jQuery);
 </script>
+
+<div id="final" style="display: none;">
+  <h2>Here's your submission:</h2>
+  <img id="final-drawing" style="background-color: white; border: 4px solid black;">
+  <h2>Be patient. It'll be uploaded soon.</h2>
+  <a href="https://www.instagram.com/artoftheppl/">@artoftheppl</a>
+</div>
+
+<footer>
+  <br>
+  <p>Made by <a href="https://lewisforbes.com/" target="_blank">Lewis Forbes</a></p>
+  <p>Code available on <a href="https://github.com/lewisforbes/art-of-the-people" target="_blank">Github</a></p>
+</footer>
+  </center>
+
 </body>
 </html>

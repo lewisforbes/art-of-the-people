@@ -42,9 +42,3 @@ def post_img(b64_str, title, artist):
         bot.upload_photo(temp_jpg.name,caption=my_caption)
     except:
         pass
-        
-    return True 
-
-def post_img_temp(x,y,z):
-    print("Received: ", y, z)
-    return True
