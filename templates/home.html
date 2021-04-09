@@ -13,6 +13,17 @@
           height: 406px;
           margin: auto;
       }
+
+       #final-drawing {
+         width: 500px;
+       }
+    }
+
+    /* mobile only */
+    @media only screen and (max-width: 499px) {
+      #final-drawing {
+        width: 95%;
+      }
     }
 
     .literally {
@@ -21,7 +32,7 @@
         position: relative;
         }
 
-    h1,h2,p,a {
+    h1,h2,p,a, label {
       font-family: Arial;
     }
 
@@ -36,6 +47,10 @@
 
     body {
       background-color: gainsboro;
+    }
+
+    .consent {
+      font-size: 16px;
     }
   </style>
 </head>
@@ -71,12 +86,21 @@
   </script>
 
   <br>
-<form id="my-form" autocomplete="off" style="font-size: 25px;">
+
+<form id="submit-form" autocomplete="off" style="font-size: 25px;">
   <input type="text" id="title" name="title" placeholder="Title" required/>
   <input type="text" id="artist" name="artist" placeholder="Artist" required/>
   <input type="hidden" id="csrfmiddlewaretoken" name="csrfmiddlewaretoken" value="{{ csrf_token }}"/>
   <input type="hidden" id="img_data" name="img_data" value=""/>
-
+  <br><br>
+  <input type="checkbox" id="consent-1" required>
+  <label class="consent" for="consent-1">I know that my submission will be posted to <a href="https://www.instagram.com/artoftheppl/">@artoftheppl</a>.</label>
+  <br>
+  <input type="checkbox" id="consent-2" required>
+  <label class="consent" for="consent-2">I promise to not submit anything offensive.</label>
+  <br>
+  <input type="checkbox" id="consent-3" required>
+  <label class="consent" for="consent-3">I know that I can only submit once every two minutes.</label>
   <br><br>
   <button type="submit" style="font-size: 20px;">Post</button>
 </form>
@@ -84,6 +108,7 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
   (function($){
+
       function processForm( e ){
           var img_data = getImgData();
           document.getElementById("img_data").setAttribute("value", img_data);
@@ -113,7 +138,7 @@
 
       function submittedView(img_data) {
         document.getElementsByClassName("fs-container")[0].style.display = "none";
-        document.getElementById("my-form").style.display = "none";
+        document.getElementById("submit-form").style.display = "none";
 
         final_drawing = document.getElementById('final-drawing');
         final_drawing.src = 'data:image/jpeg;base64,' + img_data.substr(22, img_data.length);
@@ -126,17 +151,16 @@
         document.getElementById("title").setAttribute("value", '');
       }
 
-      $('#my-form').submit( processForm );
+      $('#submit-form').submit( processForm );
   })(jQuery);
 </script>
 
 <div id="final" style="display: none;">
   <h2>Here's your submission:</h2>
-  <img id="final-drawing" style="background-color: white; border: 4px solid black; width: 95%;">
-  <h2>Be patient. It'll be uploaded soon.</h2>
+  <img id="final-drawing" style="background-color: white; border: 4px solid black;">
+  <h2>Be patient - it'll be uploaded soon (unless you've posted too much).</h2>
   <a href="https://www.instagram.com/artoftheppl/" style="font-size: medium;">@artoftheppl</a>
 </div>
-
 <footer>
   <br>
   <p>Made by <a href="https://lewisforbes.com/" target="_blank">Lewis Forbes</a></p>
