@@ -88,10 +88,11 @@
   <br>
 
 <form id="submit-form" autocomplete="off" style="font-size: 25px;">
+  {% csrf_token %}
   <h2 style="color: red; display: none;" id="blank-img-msg">Draw something lol</h2>
   <input type="text" id="title" name="title" placeholder="Title" required/>
   <input type="text" id="artist" name="artist" placeholder="Artist" required/>
-  <input type="hidden" id="csrfmiddlewaretoken" name="csrfmiddlewaretoken" value="{{ csrf_token }}"/>
+  <!-- <input type="hidden" id="csrfmiddlewaretoken" name="csrfmiddlewaretoken" value="{{ csrf_token }}"/> -->
   <input type="hidden" id="img_data" name="img_data" value=""/>
   <br><br>
   <input type="checkbox" id="consent-1" required>

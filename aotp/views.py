@@ -8,6 +8,9 @@ from . import functions
 
 from ratelimit.decorators import ratelimit
 
+from django.views.decorators.csrf import ensure_csrf_cookie
+
+@ensure_csrf_cookie
 class HomePageView(TemplateView):
     template_name = "home.html"
 
