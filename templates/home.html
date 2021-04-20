@@ -112,6 +112,7 @@
   (function($){
 
       function processForm( e ){
+          e.stopImmediatePropagation();
           var img_data = getImgData();
           if (isImgBlank(img_data)) {
             document.getElementById("blank-img-msg").style.display = "block";
