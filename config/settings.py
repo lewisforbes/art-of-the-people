@@ -24,7 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'ply^@ucy^%&r#8y8%9b$8!1*-_0@8mk8=#kj2wj305*kzz5%6z'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get('DEBUG', True))
+# DEBUG = bool(os.environ.get('DEBUG', True))
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -128,17 +129,6 @@ STATICFILES_DIRS = (
 )
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-import os
+
 USERNAME = os.environ.get('USERNAME', True)
 PASSWORD = os.environ.get('PASSWORD', True)
-
-# CHANNEL_LAYERS = {
-#     "default": {
-#         "BACKEND": "asgi_redis.RedisChannelLayer",
-#         "CONFIG": {
-#             "hosts": [os.environ.get('REDISCLOUD_URL', 'redis://localhost:6379')],
-#         },
-#         "ROUTING": "chat.routing.channel_routing",
-#     },
-# }
-
