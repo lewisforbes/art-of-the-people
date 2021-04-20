@@ -132,3 +132,5 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 USERNAME = os.environ.get('USERNAME', True)
 PASSWORD = os.environ.get('PASSWORD', True)
+
+CSRF_COOKIE_SECURE = True 
