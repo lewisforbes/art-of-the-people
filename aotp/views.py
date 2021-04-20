@@ -21,4 +21,5 @@ def external(request):
     artist = request.POST.get('artist')
     title = request.POST.get('title')
     #functions.post_img(img_data, title, artist)
+    print("hi")
     return render(request, 'home.html')
