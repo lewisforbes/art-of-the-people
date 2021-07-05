@@ -6,10 +6,8 @@ from django.conf import settings
 
 import os
 
-from instabot import Bot
-from ratelimit.decorators import ratelimit
+from instabot import bot
 
-@ratelimit(key='ip', rate='30s', method=ratelimit.ALL, block=True)
 def newBot(my_user=settings.USERNAME, my_pass=settings.PASSWORD):
     reset(my_user) # may do nothing
     bot = Bot()
